@@ -4,7 +4,7 @@ This configuration file and this shellscript create a Linux (ubuntu) virtual mac
 
 ## Kudos and inspiration
 
-* Adafruit's [ARM toolchain for vagrant](https://github.com/adafruit/ARM-toolchain-vagrant)
+* Adafruit's [ARM Toolchain for Vagrant](https://github.com/adafruit/ARM-toolchain-vagrant)
 * Novation's [LaunchPad pro](https://github.com/dvhdr/launchpad-pro)
 
 ## Requirements
@@ -60,10 +60,10 @@ The virtual machine continues running and can be reaccessed with `vagrant ssh`. 
 
 By default, the working directory (`eurorack-modules`) is installed in the `/vagrant` directory, which is shared between the VM and the host.  You can thus use any text editor on the host to modify the files.  Note that any file can be transfered between the VM and the host by being copied in this location.
 
-If you prefer to work in a more "self-contained" environement, comment the line `CODE_DIRECTORY=/vagrant` and uncomment the line `CODE_DIRECTORY=/home/vagrant`.  The code will not be installed in the shared directory, and will be accessible only from within the VM.
+If you prefer working in a more self-contained environement and leave your host directory clean, you can comment the line `CODE_DIRECTORY=/vagrant` and uncomment the line `CODE_DIRECTORY=/home/vagrant` before setting up the VM.  The code will not be installed in the shared directory, and will be accessible only from within the VM.
 
 ## USB issues
 
 To pass through USB devices from your real machine to the virtual machine, consult the [VirtualBox USB documentation](https://www.virtualbox.org/manual/ch03.html#idp96037808).
 
-Additionally, you might have to run as super user the commands making use of a USB device.  A few udev rules have been added for common device (AVR ISP mkII, Olimex ARM-USB-OCD, FTDI USB-serial adapter).
+Additionally, inside the VM, you might have to run as super user (`sudo <command>`) the commands making use of a USB device because of permission issues.  A few udev rules have been added for common device (AVR ISP mkII, Olimex ARM-USB-OCD, FTDI USB-serial adapter).
