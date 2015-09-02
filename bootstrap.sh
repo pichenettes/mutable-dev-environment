@@ -61,8 +61,9 @@ rm *.tar.gz
 
 # Allow non-root users to access USB devices such as Atmel AVR and Olimex
 # programmers, FTDI dongles...
-echo 'SUBSYSTEMS=="usb", ATTRS{idVendor}=="15ba", ATTRS{idProduct}=="002b", GROUP="users", MODE="0666"' >> /etc/udev/rules.d/60-programmers.rules
 echo 'SUBSYSTEMS=="usb", ATTRS{idVendor}=="15ba", ATTRS{idProduct}=="0003", GROUP="users", MODE="0666"' >> /etc/udev/rules.d/60-programmers.rules
+echo 'SUBSYSTEMS=="usb", ATTRS{idVendor}=="15ba", ATTRS{idProduct}=="002a", GROUP="users", MODE="0666"' >> /etc/udev/rules.d/60-programmers.rules
+echo 'SUBSYSTEMS=="usb", ATTRS{idVendor}=="15ba", ATTRS{idProduct}=="002b", GROUP="users", MODE="0666"' >> /etc/udev/rules.d/60-programmers.rules
 echo 'SUBSYSTEMS=="usb", ATTRS{idVendor}=="03eb", ATTRS{idProduct}=="2104", GROUP="users", MODE="0666"' >> /etc/udev/rules.d/60-programmers.rules
 echo 'SUBSYSTEMS=="usb", KERNEL=="ttyUSB*", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", GROUP="users", MODE="0666", SYMLINK+="ftdi-usbserial"' >> /etc/udev/rules.d/60-programmers.rules
 sudo udevadm control --reload-rules
@@ -85,8 +86,18 @@ CODE_DIRECTORY=/vagrant
 
 # Get modules source code
 cd $CODE_DIRECTORY
-sudo -s -u vagrant -H git clone https://github.com/pichenettes/eurorack.git eurorack-modules
-cd $CODE_DIRECTORY/eurorack-modules
+USER_GITHUB_URL=$1
+if [ $USER_GITHUB_URL ]
+then
+  # Get from a clone of the original repo.
+  sudo -s -u vagrant -H git clone $USER_GITHUB_URL eurorack-modules
+  cd $CODE_DIRECTORY/eurorack-modules
+  sudo -s -u vagrant -H git remote add pichenettes https://github.com/pichenettes/eurorack.git
+else
+  # Get from the original repo.
+  sudo -s -u vagrant -H git clone https://github.com/pichenettes/eurorack.git eurorack-modules
+  cd $CODE_DIRECTORY/eurorack-modules
+fi
 sudo -s -u vagrant -H git submodule init
 sudo -s -u vagrant -H git submodule update
 
