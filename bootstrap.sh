@@ -1,5 +1,22 @@
 #!/usr/bin/env bash
 
+# Install some additional drivers, including support for FTDI dongles
+# http://askubuntu.com/questions/541443/how-to-install-usbserial-and-ftdi-sio-modules-to-14-04-trusty-vagrant-box
+sudo apt-get install -y linux-image-extra-virtual
+sudo modprobe ftdi_sio vendor=0x0403 product=0x6001
+
+# Install FTDI lib
+# cd /home/vagrant
+# wget -nv http://www.ftdichip.com/Drivers/D2XX/Linux/libftd2xx-x86_64-1.3.6.tgz
+# tar xvf libftd2xx-x86_64-1.3.6.tgz
+# cd release/build
+# cp -r lib* /usr/local/lib
+# chmod 0755 /usr/local/lib/libftd2xx.so.1.3.6
+# ln -sf /usr/local/lib/libftd2xx.so.1.3.6 /usr/local/lib/libftd2xx.so
+# cd /home/vagrant
+# rm -rf release
+# rm *.tgz
+
 # Install basic development tools
 sudo dpkg --add-architecture i386
 sudo apt-get update
@@ -28,7 +45,22 @@ cd /home/vagrant
 rm -rf openocd-0.7.0
 rm *.tar.gz
 
-# Allow non-root users to access USB devices
+# Install stlink
+cd /home/vagrant
+wget https://github.com/texane/stlink/archive/1.1.0.tar.gz
+tar xvfz 1.1.0.tar.gz
+cd stlink-1.1.0
+./autogen.sh
+./configure
+make
+sudo make install
+sudo cp 49-stlink*.rules /etc/udev/rules.d/
+cd /home/vagrant
+rm -rf stlink-1.1.0
+rm *.tar.gz
+
+# Allow non-root users to access USB devices such as Atmel AVR and Olimex
+# programmers, FTDI dongles...
 echo 'SUBSYSTEMS=="usb", ATTRS{idVendor}=="15ba", ATTRS{idProduct}=="002b", GROUP="users", MODE="0666"' >> /etc/udev/rules.d/60-programmers.rules
 echo 'SUBSYSTEMS=="usb", ATTRS{idVendor}=="15ba", ATTRS{idProduct}=="0003", GROUP="users", MODE="0666"' >> /etc/udev/rules.d/60-programmers.rules
 echo 'SUBSYSTEMS=="usb", ATTRS{idVendor}=="03eb", ATTRS{idProduct}=="2104", GROUP="users", MODE="0666"' >> /etc/udev/rules.d/60-programmers.rules
