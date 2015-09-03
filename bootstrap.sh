@@ -38,7 +38,7 @@ cd /home/vagrant
 wget -nv http://downloads.sourceforge.net/project/openocd/openocd/0.7.0/openocd-0.7.0.tar.gz
 tar xvfz openocd-0.7.0.tar.gz
 cd openocd-0.7.0
-./configure --enable-ftdi --enable-ft2232-libftdi
+./configure --enable-ftdi --enable-legacy-ft2232-libftdi --enable-stlink
 make
 sudo make install
 cd /home/vagrant
