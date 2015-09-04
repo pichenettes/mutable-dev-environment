@@ -44,13 +44,15 @@ To write the firmware to the module with an Olimex ARM-USB-OCD-H JTAG adapter, u
 
     make -f clouds/makefile upload
 
+You can edit [stmlib/makefile.inc](https://github.com/pichenettes/stmlib/blob/master/makefile.inc#L31) to use another programmer. We're still working on stlink-v2+OpenOCD support!
+
 Or you can generate a .wav file for the built-in audio updater:
 
     make -f clouds/makefile wav
 
-The firmware update file is put in `build/clouds/clouds.wav`.
+The firmware update file will be put in `build/clouds/clouds.wav`.
 
-Once you're done with this hacking session, you can leave the VM terminal with:
+Once you're done with your hacking session, you can leave the VM terminal with:
 
     exit
 
