@@ -44,7 +44,7 @@ To write the firmware to the module with an Olimex ARM-USB-OCD-H JTAG adapter, u
 
     make -f clouds/makefile upload
 
-You can edit [stmlib/makefile.inc](https://github.com/pichenettes/stmlib/blob/master/makefile.inc#L31) to use another programmer. We're still working on stlink-v2+OpenOCD support!
+You can edit [stmlib/makefile.inc](https://github.com/pichenettes/stmlib/blob/master/makefile.inc#L31) to use another programmer.
 
 Or you can generate a .wav file for the built-in audio updater:
 
