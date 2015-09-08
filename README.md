@@ -67,5 +67,3 @@ If you prefer working in a more self-contained environement and leave your host 
 ## USB issues
 
 To pass through USB devices from your real machine to the virtual machine, consult the [VirtualBox USB documentation](https://www.virtualbox.org/manual/ch03.html#idp96037808).
-
-Additionally, inside the VM, you might have to run as super user (`sudo <command>`) the commands making use of a USB device because of permission issues.  A few udev rules have been added for common device (AVR ISP mkII, Olimex ARM-USB-OCD, FTDI USB-serial adapter).
