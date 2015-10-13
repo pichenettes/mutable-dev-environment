@@ -44,7 +44,7 @@ To write the firmware to the module with an Olimex ARM-USB-OCD-H JTAG adapter, u
 
     make -f clouds/makefile upload
 
-You can edit [stmlib/makefile.inc](https://github.com/pichenettes/stmlib/blob/master/makefile.inc#L31) to use another programmer.
+Using other programmers is of course possible, please see [Customization](#customization).
 
 Or you can generate a .wav file for the built-in audio updater:
 
@@ -60,10 +60,38 @@ The virtual machine continues running and can be reaccessed with `vagrant ssh`. 
 
 ## Moving files between the VM and the host
 
-By default, the working directory (`eurorack-modules`) is installed in the `/vagrant` directory, which is shared between the VM and the host.  You can thus use any text editor on the host to modify the files.  Note that any file can be transfered between the VM and the host by being copied in this location.
+By default, the working directory (`eurorack-modules`) is installed in the `/vagrant` directory, which is shared between the VM and the host.  You can thus use any text editor on the host to modify the files.  Note that any file can be transferred between the VM and the host by being copied in this location.
 
-If you prefer working in a more self-contained environement and leave your host directory clean, you can comment the line `CODE_DIRECTORY=/vagrant` and uncomment the line `CODE_DIRECTORY=/home/vagrant` before setting up the VM.  The code will not be installed in the shared directory, and will be accessible only from within the VM.
+If you prefer working in a more self-contained environment and leave your host directory clean, you can comment the line `CODE_DIRECTORY=/vagrant` and uncomment the line `CODE_DIRECTORY=/home/vagrant` before setting up the VM.  The code will not be installed in the shared directory, and will be accessible only from within the VM.
 
 ## USB issues
 
 To pass through USB devices from your real machine to the virtual machine, consult the [VirtualBox USB documentation](https://www.virtualbox.org/manual/ch03.html#idp96037808).
+
+## <a name=#customization></a>Customization
+
+### Using a different programmer
+To use a programmer other than the default (AVR ISP mkII, ARM-USB-OCD-H) it is no longer necessary to edit the makefiles. Instead, the programmer can be set in the shell for the current session, e.g.
+
+	export PGM_INTERFACE=stlink-v2
+	export PGM_INTERFACE_TYPE=hla
+
+for ARM projects using a JTAG adapter. Similarly for AVR projects, you can use
+
+	export PROGRAMMER=stk500
+	export PROGRAMMER_PORT=/dev/tty.usbserial-xxxxxxxx
+
+Any further calls to `make` will then automatically use these settings. To make them permanent, add the exports to the end of `~/.bashrc`.
+
+See [stmlib/makefile.inc](https://github.com/pichenettes/stmlib/blob/master/makefile.inc#L29) and [avrlib/makefile.mk](https://github.com/pichenettes/avril/blob/master/makefile.mk#L16) for more options that can be customized.
+
+Another way (e.g. to test if settings are correct) is to just specify the value in the call to `make`:
+
+	PGM_INTERFACE=arm-usb-tiny-h make -f braids/makefile upload
+
+### Custom repository URL
+If you want to build code from your own github fork, you can specify the repository to clone when you create the VM via the `USER_GITHUB_URL` environment variable, e.g.
+
+	USER_GITHUB_URL=https://github.com/<username>/eurorack.git vagrant up
+
+The Mutable Instruments' repository is automatically added as the git remote `pichenettes`.
