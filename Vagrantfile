@@ -60,8 +60,7 @@ Vagrant.configure(2) do |config|
    vb.customize ['usbfilter', 'add', '0', '--target', :id, '--name', 'FTDI serial adapter', '--vendorid', '0x0403', '--productid', '0x6001']
   end
 
-  # Enable provisioning with a shell script. Additional provisioners such as
-  # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
-  # documentation for more information about their specific syntax and use.
-  config.vm.provision :shell, path: "bootstrap.sh", args: "#{ENV['USER_GITHUB_URL']}"
+  # provisioning scripts
+  config.vm.provision :shell, path: "0_install-toolchain.sh"
+  config.vm.provision :shell, path: "1_clone-code.sh", args: "#{ENV['USER_GITHUB_URL']}"
 end
