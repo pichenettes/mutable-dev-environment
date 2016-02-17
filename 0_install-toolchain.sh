@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -x
+# set -x
 
 # fix apt warnings like:
 # ==> default: dpkg-preconfigure: unable to re-open stdin: No such file or directory
