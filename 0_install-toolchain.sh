@@ -1,6 +1,15 @@
 #!/usr/bin/env bash
 
-set -x
+# set -x
+
+# fix apt warnings like:
+# ==> default: dpkg-preconfigure: unable to re-open stdin: No such file or directory
+# http://serverfault.com/questions/500764/dpkg-reconfigure-unable-to-re-open-stdin-no-file-or-directory
+export LANGUAGE=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+locale-gen en_US.UTF-8
+dpkg-reconfigure locales
 
 # Install some additional drivers, including support for FTDI dongles
 # http://askubuntu.com/questions/541443/how-to-install-usbserial-and-ftdi-sio-modules-to-14-04-trusty-vagrant-box
@@ -11,7 +20,7 @@ sudo modprobe ftdi_sio vendor=0x0403 product=0x6001
 # Install FTDI lib
 # cd /home/vagrant
 # wget -nv http://www.ftdichip.com/Drivers/D2XX/Linux/libftd2xx-x86_64-1.3.6.tgz
-# tar xvf libftd2xx-x86_64-1.3.6.tgz
+# tar xfz libftd2xx-x86_64-1.3.6.tgz
 # cd release/build
 # cp -r lib* /usr/local/lib
 # chmod 0755 /usr/local/lib/libftd2xx.so.1.3.6
@@ -38,8 +47,8 @@ sudo ln -s /usr /usr/local/CrossPack-AVR
 
 # Install openocd
 cd /home/vagrant
-wget -nv http://downloads.sourceforge.net/project/openocd/openocd/0.9.0/openocd-0.9.0.tar.gz
-tar xvfz openocd-0.9.0.tar.gz
+wget -nv https://downloads.sourceforge.net/project/openocd/openocd/0.9.0/openocd-0.9.0.tar.gz
+tar xfz openocd-0.9.0.tar.gz
 cd openocd-0.9.0
 ./configure --enable-ftdi --enable-legacy-ft2232-libftdi --enable-stlink
 make
@@ -50,8 +59,8 @@ rm *.tar.gz
 
 # Install stlink
 cd /home/vagrant
-wget https://github.com/texane/stlink/archive/1.1.0.tar.gz
-tar xvfz 1.1.0.tar.gz
+wget -nv https://github.com/texane/stlink/archive/1.1.0.tar.gz
+tar xfz 1.1.0.tar.gz
 cd stlink-1.1.0
 ./autogen.sh
 ./configure
@@ -82,30 +91,7 @@ rm *.tar.bz2
 # this gcc version instead of 4.5.2).
 ln -s /usr/local/arm-4.8.3 /usr/local/arm
 
-# Code is stored in the VM itself
-# CODE_DIRECTORY=/home/vagrant
-# Code is stored in a directory shared between the VM and the host.
-CODE_DIRECTORY=/vagrant
-
-# Get modules source code
-cd $CODE_DIRECTORY
-USER_GITHUB_URL=$1
-if [ $USER_GITHUB_URL ]
-then
-  # Get from a clone of the original repo.
-  sudo -s -u vagrant -H git clone $USER_GITHUB_URL eurorack-modules
-  cd $CODE_DIRECTORY/eurorack-modules
-  sudo -s -u vagrant -H git remote add pichenettes https://github.com/pichenettes/eurorack.git
-else
-  # Get from the original repo.
-  sudo -s -u vagrant -H git clone https://github.com/pichenettes/eurorack.git eurorack-modules
-  cd $CODE_DIRECTORY/eurorack-modules
-fi
-sudo -s -u vagrant -H git submodule init
-sudo -s -u vagrant -H git submodule update
-
-# Add . to PYTHONPATH
+# Add "." to PYTHONPATH, and set default language
 echo 'export LC_ALL=en_US.UTF-8' >> /home/vagrant/.bashrc
 echo 'export LANGUAGE=en_US' >> /home/vagrant/.bashrc
 echo 'export PYTHONPATH=.:$PYTHONPATH' >> /home/vagrant/.bashrc
-echo "cd $CODE_DIRECTORY/eurorack-modules" >> /home/vagrant/.bashrc
