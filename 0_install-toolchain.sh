@@ -1,6 +1,15 @@
 #!/usr/bin/env bash
 
-set -x
+# set -x
+
+# fix apt warnings like:
+# ==> default: dpkg-preconfigure: unable to re-open stdin: No such file or directory
+# http://serverfault.com/questions/500764/dpkg-reconfigure-unable-to-re-open-stdin-no-file-or-directory
+export LANGUAGE=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+locale-gen en_US.UTF-8
+dpkg-reconfigure locales
 
 # fix apt warnings like:
 # ==> default: dpkg-preconfigure: unable to re-open stdin: No such file or directory
@@ -16,18 +25,6 @@ dpkg-reconfigure locales
 sudo apt-get update -qq
 sudo apt-get install -y linux-image-extra-virtual
 sudo modprobe ftdi_sio vendor=0x0403 product=0x6001
-
-# Install FTDI lib
-# cd /home/vagrant
-# wget -nv http://www.ftdichip.com/Drivers/D2XX/Linux/libftd2xx-x86_64-1.3.6.tgz
-# tar xfz libftd2xx-x86_64-1.3.6.tgz
-# cd release/build
-# cp -r lib* /usr/local/lib
-# chmod 0755 /usr/local/lib/libftd2xx.so.1.3.6
-# ln -sf /usr/local/lib/libftd2xx.so.1.3.6 /usr/local/lib/libftd2xx.so
-# cd /home/vagrant
-# rm -rf release
-# rm *.tgz
 
 # Install basic development tools
 sudo dpkg --add-architecture i386
@@ -50,7 +47,7 @@ cd /home/vagrant
 wget -nv https://downloads.sourceforge.net/project/openocd/openocd/0.9.0/openocd-0.9.0.tar.gz
 tar xfz openocd-0.9.0.tar.gz
 cd openocd-0.9.0
-./configure --enable-ftdi --enable-legacy-ft2232-libftdi --enable-stlink
+./configure --enable-ftdi --enable-stlink
 make
 sudo make install
 cd /home/vagrant
@@ -81,7 +78,7 @@ echo 'SUBSYSTEMS=="usb", KERNEL=="ttyUSB*", ATTRS{idVendor}=="0403", ATTRS{idPro
 sudo udevadm control --reload-rules
 sudo udevadm trigger
 
-# Install toolchain for STM32F4
+# Install toolchain for STM32F
 cd /home/vagrant
 wget -nv https://launchpad.net/gcc-arm-embedded/4.8/4.8-2013-q4-major/+download/gcc-arm-none-eabi-4_8-2013q4-20131204-linux.tar.bz2
 tar xjf gcc-arm-none-eabi-4_8-2013q4-20131204-linux.tar.bz2

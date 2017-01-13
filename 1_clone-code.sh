@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 
-set -x
+# set -x
 
 # Code is stored in the VM itself
-# CODE_DIRECTORY=/home/vagrant
+# CODE_ROOT=/home/vagrant
+
 # Code is stored in a directory shared between the VM and the host.
 CODE_ROOT=/vagrant
 WORKING_DIR_NAME=eurorack-modules

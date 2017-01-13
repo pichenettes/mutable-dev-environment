@@ -62,5 +62,5 @@ Vagrant.configure(2) do |config|
 
   # provisioning scripts
   config.vm.provision :shell, path: "0_install-toolchain.sh"
-  config.vm.provision :shell, path: "1_clone-code.sh", args: "#{ENV['USER_GITHUB_URL']}"
+  config.vm.provision :shell, path: "1_clone-code.sh", args: "#{ENV['USER_GITHUB_URL']}", privileged: false
 end

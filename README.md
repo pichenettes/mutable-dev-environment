@@ -87,7 +87,7 @@ See [stmlib/makefile.inc](https://github.com/pichenettes/stmlib/blob/master/make
 
 Another way (e.g. to test if settings are correct) is to just specify the value in the call to `make`:
 
-	PGM_INTERFACE=arm-usb-tiny-h make -f braids/makefile upload
+	PGM_INTERFACE=ftdi/olimex-arm-usb-tiny-h make -f braids/makefile upload
 
 ### Custom repository URL
 If you want to build code from your own github fork, you can specify the repository to clone when you create the VM via the `USER_GITHUB_URL` environment variable, e.g.
