@@ -56,8 +56,8 @@ rm *.tar.gz
 
 # Install stlink
 cd /home/vagrant
-wget -nv https://github.com/texane/stlink/archive/1.1.0.tar.gz
-tar xfz 1.1.0.tar.gz
+wget -nv https://github.com/texane/stlink/archive/v1.1.0.tar.gz
+tar xfz v1.1.0.tar.gz
 cd stlink-1.1.0
 ./autogen.sh
 ./configure
