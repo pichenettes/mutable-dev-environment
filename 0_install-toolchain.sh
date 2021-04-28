@@ -44,14 +44,14 @@ sudo ln -s /usr /usr/local/CrossPack-AVR
 
 # Install openocd
 cd /home/vagrant
-wget -nv https://downloads.sourceforge.net/project/openocd/openocd/0.9.0/openocd-0.9.0.tar.gz
-tar xfz openocd-0.9.0.tar.gz
-cd openocd-0.9.0
+wget -nv https://downloads.sourceforge.net/project/openocd/openocd/0.11.0/openocd-0.11.0.tar.gz
+tar xfz openocd-0.11.0.tar.gz
+cd openocd-0.11.0
 ./configure --enable-ftdi --enable-stlink
 make
 sudo make install
 cd /home/vagrant
-rm -rf openocd-0.9.0
+rm -rf openocd-0.11.0
 rm *.tar.gz
 
 # Install stlink
