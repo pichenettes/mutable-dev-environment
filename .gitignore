@@ -1,2 +1,3 @@
 .vagrant/
 eurorack-modules/
+.DS_Store
