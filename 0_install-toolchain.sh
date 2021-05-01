@@ -33,7 +33,7 @@ sudo apt-get install -y build-essential autotools-dev autoconf pkg-config libusb
 sudo locale-gen UTF-8
 
 # Install python
-sudo apt-get install -y python2.7 python-numpy python-scipy python-matplotlib
+sudo apt-get install -y python2.7 python-numpy python-scipy python-matplotlib python3 python3-serial
 
 # Install development tools for avr
 sudo apt-get install -y gcc-avr binutils-avr avr-libc avrdude
