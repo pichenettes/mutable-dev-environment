@@ -44,7 +44,7 @@ sudo ln -s /usr /usr/local/CrossPack-AVR
 
 # Install openocd
 cd /home/vagrant
-wget -nv https://downloads.sourceforge.net/project/openocd/openocd/0.11.0/openocd-0.11.0.tar.gz
+wget -nv https://downloads.sourceforge.net/project/openocd/openocd/0.11.0/openocd-0.11.0.tar.gz --no-check-certificate
 tar xfz openocd-0.11.0.tar.gz
 cd openocd-0.11.0
 ./configure --enable-ftdi --enable-stlink
@@ -56,7 +56,7 @@ rm *.tar.gz
 
 # Install stlink
 cd /home/vagrant
-wget -nv https://github.com/texane/stlink/archive/v1.1.0.tar.gz
+wget -nv https://github.com/texane/stlink/archive/v1.1.0.tar.gz --no-check-certificate
 tar xfz v1.1.0.tar.gz
 cd stlink-1.1.0
 ./autogen.sh
@@ -80,7 +80,7 @@ sudo udevadm trigger
 
 # Install toolchain for STM32F
 cd /home/vagrant
-wget -nv https://launchpad.net/gcc-arm-embedded/4.8/4.8-2013-q4-major/+download/gcc-arm-none-eabi-4_8-2013q4-20131204-linux.tar.bz2
+wget -nv https://launchpad.net/gcc-arm-embedded/4.8/4.8-2013-q4-major/+download/gcc-arm-none-eabi-4_8-2013q4-20131204-linux.tar.bz2 --no-check-certificate
 tar xjf gcc-arm-none-eabi-4_8-2013q4-20131204-linux.tar.bz2
 sudo mv gcc-arm-none-eabi-4_8-2013q4 /usr/local/arm-4.8.3/
 rm *.tar.bz2
