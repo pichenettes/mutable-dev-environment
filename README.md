@@ -45,7 +45,7 @@ Then, you can log onto the virtual machine by running:
 
 Once in the virtual machine, you can try, for example, to compile Clouds' bootloader and code:
 
-    make -f clouds/bootloader/makefile hex
+    make -f clouds/bootloader/makefile
     make -f clouds/makefile
 
 To write the firmware to the module with an Olimex ARM-USB-OCD-H JTAG adapter, use:
